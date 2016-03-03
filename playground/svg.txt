@@ -1,0 +1,9 @@
+//notes
+
+svg:
+
+window.setInterval(fxn, 16);
+document.getElemendByTagName("circle");
+var c = document.createElementNS(svgID, "circle");
+radius = parseInt(c.getAttribute("r")); //parsing bcuz result comes in string
+c.setAttribute("r", radius.toString());
