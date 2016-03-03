@@ -1,6 +1,6 @@
 var c = document.getElementById("playground");
 var s = document.getElementById("dot");
-var v = document.getElementById("dvd");
+var d = document.getElementById("dvd");
 var b = document.getElementById("stop");
 var ctx = c.getContext("2d");
 
@@ -15,8 +15,7 @@ var increasingY;
 
 var request;
 
-//Begins by running clear funtion
-clear();
+
 //Listens to stop button
 b.addEventListener("click", stop);
 //Listens to start button
@@ -27,10 +26,10 @@ s.addEventListener("click", function(){
 });
 //Listens to dvd button
 d.addEventListener("click", function(){
-	x = 269;
-	y = 269;
+	x = 100;
+	y = 100;
 	increasingX = true;
-	increasingY = true;
+	increasingY = false;
 	dvd();
 });
 
@@ -63,22 +62,30 @@ function dvd(){
 	stop();
 	var logo = new Image();
 	logo.src = "logo_dvd.jpg";
-	logo.width = logo.width / 4;
-	logo.height = logo.height / 4;
-	ctx.drawImage(logo, x, y, logo.width, logo.height);
+	//logo.width = logo.width / 4;
+	//logo.height = logo.height / 4;
+	console.log(x + logo.width / 4);
+	console.log(y + logo.height / 4);
+	ctx.drawImage(logo, x, y, logo.width / 4, logo.height / 4);
 	if (increasingX){
 		x++;
+	}
+	else{
+		x--;
 	}
 	if (increasingY){
 		y++;
 	}
-	if (x < 1 || x + logo.width > 537){
+	else{
+		y--;
+	}
+	if (x < -17 || x + (logo.width / 4) == 555){
 		increasingX = !increasingX;
 	}
-	if (y < 1 || y + logo.width > 537){
+	if (y < -19 || y + (logo.width / 4) == 607){
 		increasingY = !increasingY;
 	}
-	
+
 	request = window.requestAnimationFrame(dvd);
 }
 
