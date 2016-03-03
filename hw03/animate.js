@@ -1,94 +1,107 @@
+//model for HTML5 canvas-based animation
+
+//access canvas and buttons via DOM
 var c = document.getElementById("playground");
-var s = document.getElementById("dot");
-var d = document.getElementById("dvd");
-var b = document.getElementById("stop");
+var dotButton = document.getElementById( "dot" );
+var dvdButton = document.getElementById( "dvd" );
+var stopButton = document.getElementById( "stop" );
+
+//prepare to interact with canvas in 2D
 var ctx = c.getContext("2d");
 
-//Variables to keep track of radius
-var r;
-var increasing;
-//variables to keep track of dvd
-var x;
-var y;
-var increasingX;
-var increasingY;
-
-var request;
+//set fill color to red
+ctx.fillStyle = "#ff0000";
 
 
-//Listens to stop button
-b.addEventListener("click", stop);
-//Listens to start button
-s.addEventListener("click", function(){
-	r = 1;
-	increasing = true;
-	dot();
-});
-//Listens to dvd button
-d.addEventListener("click", function(){
-	x = 100;
-	y = 100;
-	increasingX = true;
-	increasingY = false;
-	dvd();
-});
+var requestID;
 
-
-function dot(){
-	//console.log(r);
-	stop();
-	ctx.beginPath();
-	//Makes small dot
-	ctx.arc(269, 269, r, 0, 2*Math.PI);
-	ctx.stroke();
-	ctx.fillStyle = "#00FF00";
-	ctx.fill();
-	//If circle is increasing, inclement the radius.
-	if (increasing){
-		r++;
-	}
-	else {
-		r--;
-	}
-	//If radius is too large or too small, start decreasing or increasing the circle
-	if (r > 268 || r < 2){
-		increasing = !increasing;
-	}
-
-	request = window.requestAnimationFrame(dot);
+function clear() {
+    ctx.clearRect(0, 0, 538, 538);
 }
 
-function dvd(){
-	stop();
-	var logo = new Image();
+var radius = 0;
+var growing = true;
+
+
+var drawDot = function() {
+    
+    ctx.clearRect( 0, 0, c.width, c.height );
+
+    if ( growing ) {
+		radius = radius + 1;
+    }    
+    else {
+		radius = radius - 1;
+    }
+
+    if ( radius == (c.width / 2) )
+		growing = false;
+    else if ( radius == 0 ) {
+		growing = true;
+    }
+    
+    ctx.beginPath();
+    ctx.arc( c.width / 2, c.height / 2, radius, 0, 2 * Math.PI );
+    ctx.stroke();
+    ctx.fill();
+
+    requestID = window.requestAnimationFrame( drawDot );
+};
+
+
+
+var dvdLogoSetup = function() {
+	clear();
+    //Q: What good might this do?
+    window.cancelAnimationFrame( requestID );
+    
+    //var inits
+    //...
+    var logo = new Image();
 	logo.src = "logo_dvd.jpg";
-	//logo.width = logo.width / 4;
-	//logo.height = logo.height / 4;
-	console.log(x + logo.width / 4);
-	console.log(y + logo.height / 4);
-	ctx.drawImage(logo, x, y, logo.width / 4, logo.height / 4);
-	if (increasingX){
-		x++;
-	}
-	else{
-		x--;
-	}
-	if (increasingY){
-		y++;
-	}
-	else{
-		y--;
-	}
-	if (x < -17 || x + (logo.width / 4) == 555){
-		increasingX = !increasingX;
-	}
-	if (y < -19 || y + (logo.width / 4) == 607){
-		increasingY = !increasingY;
-	}
+	var x = 100;
+	var y = 100;
+	var increasingX = true;
+	var increasingY = false;
 
-	request = window.requestAnimationFrame(dvd);
-}
+    //a function defined within a function, oh my!
+    var dvdLogo = function() {
+		ctx.drawImage(logo, x, y, logo.width / 4, logo.height / 4);
+		if (increasingX){
+			x++;
+		}
+		else{
+			x--;
+		}
+		if (increasingY){
+			y++;
+		}
+		else{
+			y--;
+		}
+		if (x < -17 || x + (logo.width / 4) == 555){
+			increasingX = !increasingX;
+		}
+		if (y < -19 || y + (logo.width / 4) == 607){
+			increasingY = !increasingY;
+		}
+		//propulsion mechanism
+		//...
+	
+		//Q: Why this here?
+		requestID = window.requestAnimationFrame( dvdLogo );		
+    };
 
-function stop(){
-	window.cancelAnimationFrame(request);
-}
+    dvdLogo();
+};
+
+
+var stopIt = function() {
+    console.log( requestID );
+    window.cancelAnimationFrame( requestID );
+};
+
+
+dotButton.addEventListener( "click", drawDot );
+dvdButton.addEventListener( "click", dvdLogoSetup );
+stopButton.addEventListener( "click",  stopIt );
