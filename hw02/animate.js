@@ -1,7 +1,8 @@
 var c = document.getElementById("playground");
-var b = document.getElementById("clear");
-var s = document.getElementById("start");
-var ctx = c.getContext("2d");
+var b = document.getElementById("dot");
+var v = document.getElementById("dvd");
+var s = document.getElementById("stop");
+var cx = c.getContexat("2d");
 
 //Variables to keep track of radius
 var r;
