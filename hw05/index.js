@@ -6,7 +6,7 @@ var rep_allotted = [23,20,50,28,50,28,39,72,42,38,40,58,155,16,46,40,46,41,23,23
   0,11,99,65,30,71,9,66];
 
 var data = [4, 8, 15, 16, 23, 42];
-d3.select(".chart")
+d3.select(".republican")
     .selectAll("div")
          .data(states)
     .enter().append("div")
