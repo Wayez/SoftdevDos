@@ -1,26 +1,28 @@
-var states = ['IA','NH','SC','NV','AL','AK','AR','GA','MA','MN','OK','TN','TX','VT','VA','KS','KY','LA',
-'ME','PR','HI','ID','MI','MS','VI','DC','GU','WY','FL','IL','MO','NC','MP','OH'];
-var rep_total = [30,23,50,30,50,28,40,76,42,38,43,58,155,16,49,40,46,46,23,23,19,32,59,40,9,19,9,29,99,69,52,
-  72,9,66];
-var rep_allotted = [23,20,50,28,50,28,39,72,42,38,40,58,155,16,46,40,46,41,23,23,19,32,59,37,0,19,
-  0,11,99,65,30,71,9,66];
+var states = ['IA','NH','NV','SC','AL', 'AR', "CO", 'GA', "MA", "MN", "OK", "TN", "TE", "VT", "VG", "LA", "NE",
+"KS", "ME", "MS", "MI", "FL", "IL", "MO", "NC", "OH", "AZ", "ID", "UT", "AK", "HA", "WA", "WI", "WY", "NY", "MD",
+"CT", "DE", "PA", "RI", "IN", "GU", "WV", "KY", "OR", "VI", "PR", "CA", "MT", "NJ", "ND", "NM", "SD", "DC"];
+var rep_total = [44, 24, 35, 53, 53, 32, 66, 102, 91, 77, 38, 67, 222, 16, 95, 51, 25, 33, 25, 36, 130, 214,
+    156, 71, 107, 143, 75, 23, 33, 16, 25, 101, 86, 14, 247, 95, 55, 21, 189, 24, 83, 7, 29, 55, 61, 7, 60,
+    475, 21, 126, 18, 34, 20, 20];
+var rep_allotted = [44, 24, 34, 53, 53, 32, 66, 100, 91, 77, 38, 66, 219, 16, 94, 47, 24, 33, 22, 34, 127, 198, 135,
+    64, 104, 141];
 
-var data = [4, 8, 15, 16, 23, 42];
-d3.select(".republican")
+var calcDel = function(state){
+    if (states.indexOf(state) < rep_allotted.length){
+        return rep_allotted[states.indexOf(state)];
+    }
+    return 0;
+}
+d3.select(".democrat")
     .selectAll("div")
         .data(states)
     .enter().append("div")
+        .style("background-color", function(d) {
+            if (states.indexOf(d) >= rep_allotted.length){
+                return "#BFB7B6";
+            };
+            return "#1834B1";
+        })
         .style("width", function(d) {
-            return rep_allotted[states.indexOf(d)] * 5 + "px"; })
-        .text(function(d) { return d; });
-
-d3.select(".republican")
-    .selectAll("div")
-        .data(states)
-    .enter().append("div")
-        .style("background-color", "blue")
-        .style("left", function(d) {
-            return rep_allotted[states.indexOf(d)] * 5 + "px"; })
-        .style("width", function(d) {
-            return rep_allotted[states.indexOf(d)] * 5 + "px"; })
-        .text(function(d) { return d; });
+            return rep_total[states.indexOf(d)] * 5 + "px"; })
+        .text(function(d) { return d + " - " + calcDel(d) + "/" + rep_total[states.indexOf(d)]; })
