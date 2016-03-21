@@ -7,20 +7,22 @@
 
 <body>
   <h1>2016 Democratic Presidential Delegates</h1>
+  <table border = "1">
+      <tr>
+          <th>KEY</th>
+      </tr>
+      <tr>
+          <td>
+              <span style="color:#1834B1">States With Allotted Delegates</span><br>
+              <span style="color:#BFB7B6">States Yet To Allot Delegates</span><br>
+              State Abbreviation - Allocated Delegates / Total Regular Delegates
+          </td>
+      </tr>
+  </table>
+  <br><br>
   <div class = "democrat">
   </div>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="index.js"></script>
 </body>
 </html>
-
-<!--
-var data = [7, 8, 15, 23, 42]
-var chart = d3.select(".chart");
-var bar = chart.selectAll("div");
-var barUpdate = bar.data(data);
-var barEnter = barUpdate.enter().append("div");
-barEnter.style("width", function(d){
-  return d * 10 + "px"; });
-barEnter.text(function (d) { return d; });
--->

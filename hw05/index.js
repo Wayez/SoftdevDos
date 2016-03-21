@@ -24,5 +24,5 @@ d3.select(".democrat")
             return "#1834B1";
         })
         .style("width", function(d) {
-            return rep_total[states.indexOf(d)] * 5 + "px"; })
+            return 80 + rep_total[states.indexOf(d)] * 2 + "px"; })
         .text(function(d) { return d + " - " + calcDel(d) + "/" + rep_total[states.indexOf(d)]; })
