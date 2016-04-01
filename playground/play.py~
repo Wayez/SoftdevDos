@@ -1,2 +1,0 @@
-p = "myNoobPass1234"
-return [x for x in p]
