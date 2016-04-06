@@ -10,12 +10,12 @@ def h(x):
 
 #print h(1)
 #print h(2)
-#print h(1)(3)
+print h(1)(3)
 #print h(2)(5)
 
 b=h(1)
 
-#print b
+print b(3)
 
 def f(x):
     def g(y):
@@ -34,10 +34,7 @@ c=h(1)
 
 def repeat(text):
     def r(num):
-        ans = ""
-        for x in range(num):
-            ans += text
-        return ans
+        return num * text
     return r
 
 r1 = repeat('hello')
