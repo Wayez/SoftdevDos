@@ -33,14 +33,31 @@ print pt2(20)
 #   *PIVOT is at right place
 #3. qsort(LH) + p + qsort(OH)
 
-from random import randint
+import random, time
 
-test = [randint(0, 1000) for x in range(10)]
+def name_log(f):
+    def inner(*arg):
+        t = time.time()
+        x = f(*arg)
+        print 'execution time: ' + str(time.time() - t)
+        return x
+    return inner
+
+
+def randList(n, lower = 100, upper = 100):
+    l = []
+    for i in range(n):
+        l.append( random.randrange(lower, upper))
+    return l
+
+test = [random.randint(0, 1000) for x in range(10)]
 #test = [3, 23, 5,3 , 354, 2, 5435,5, 234, 2, 86, 64, 9]
+
+@name_log
 def qsort(List):
     if len(List) <= 1:
         return List
-    index = randint(0, len(List) - 1)
+    index = random.randint(0, len(List) - 1)
     pivot = List[index]
     lh = [ x for x in List if x < pivot]
     oh = [ x for x in List if x > pivot]
